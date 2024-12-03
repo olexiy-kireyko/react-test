@@ -59,14 +59,51 @@ const food = [
   },
 ];
 
+const alertStyle = {
+  color: 'red',
+  backgroundColor: 'green',
+  fontSize: '20',
+};
+
+const alertStyle2 = {
+  color: 'green',
+  backgroundColor: 'yellow',
+  fontSize: '30',
+};
+
+const Test = ({ children }) => {
+  return <div style={alertStyle2}>{children}</div>;
+};
+import Alert from './Alert';
 import Product from './Product';
+import './App';
+// import Rest from './Rest';
+// import Test from './Test';
 
 export default function App() {
   return (
     <div>
-      <h1>Best selling</h1>
+      <h1 style={alertStyle}>Best selling</h1>
 
       <Product items={food} />
+      <Test>
+        RRRRRRRRRR <span>gggggggggg</span>
+      </Test>
+      {/* <Rest></Rest> */}
+      {/* <Alert valuer="error">error</Alert>
+      <Alert valuer="info" bordered>
+        info
+      </Alert>
+      <Alert valuer="success" bordered shadowed>
+        success
+      </Alert> */}
+      <Alert valuer="error">FFFFFFFFFFFFF</Alert>
+      <Alert valuer="success" bordered>
+        FFFFFyyyFFFFF
+      </Alert>
+      <Alert valuer="info" shadowed>
+        FFFFFFFoooFFFF
+      </Alert>
     </div>
   );
 }
