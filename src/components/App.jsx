@@ -77,14 +77,55 @@ const Test = ({ children }) => {
 import Alert from './Alert';
 import Product from './Product';
 import './App';
+import Testemetet from './Testemet/Testemet';
+import { useEffect, useState } from 'react';
+import Clicker from './Clicker/Clicker';
 // import Rest from './Rest';
 // import Test from './Test';
 
 export default function App() {
+  const [clicker, setClicker] = useState(0);
+  const handleClicker = () => {
+    setClicker(clicker + 1);
+  };
+  const [coord, setCoord] = useState({ x: 0, y: 0 });
+  const handleCoordX = () => {
+    setCoord({ ...coord, x: coord.x + 1 });
+  };
+  const handleCoordY = () => {
+    setCoord({ ...coord, y: coord.y + 1 });
+  };
+  useEffect(() => {
+    document.title = `clicker: ${clicker}`;
+    console.log('clicker', clicker);
+    return;
+  }, [clicker]);
+  const [showModal, setShowModal] = useState(false);
+  const handleShowModal = () => {
+    setShowModal(!showModal);
+  };
+  const Modal = () => {
+    useEffect(() => {
+      const intID = setInterval(() => {
+        console.log(`modal count: ${Date.now()}`);
+      }, 2000);
+      return () => {
+        clearInterval(intID);
+      };
+    }, []);
+    return <div>MODAL WINDOW</div>;
+  };
   return (
     <div>
       <h1 style={alertStyle}>Best selling</h1>
-
+      <button type="button" onClick={handleShowModal}>
+        Modal, {showModal ? 'hide' : 'show'}, {showModal && <Modal />}
+      </button>
+      <p>
+        x: {coord.x} y: {coord.y}
+      </p>
+      <button onClick={handleCoordX}>click x+1</button>
+      <button onClick={handleCoordY}>click y+1</button>
       <Product items={food} />
       <Test>
         RRRRRRRRRR <span>gggggggggg</span>
@@ -104,6 +145,10 @@ export default function App() {
       <Alert valuer="info" shadowed>
         FFFFFFFoooFFFF
       </Alert>
+      <Testemetet message={'first'}>First test</Testemetet>
+      <Testemetet message={'second'}>second test</Testemetet>
+      <Clicker value={clicker} onHandle={handleClicker} />
+      <Clicker value={clicker} onHandle={handleClicker} />
     </div>
   );
 }

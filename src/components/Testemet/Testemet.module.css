@@ -1,0 +1,7 @@
+.svg {
+  fill: green;
+  /* color: green; */
+}
+.svg:hover {
+  cursor: pointer;
+}
