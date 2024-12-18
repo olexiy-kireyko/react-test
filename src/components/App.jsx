@@ -80,6 +80,15 @@ import './App';
 import Testemetet from './Testemet/Testemet';
 import { useEffect, useState } from 'react';
 import Clicker from './Clicker/Clicker';
+import Usetwoeff from './Usetwoeff/Usetwoeff';
+import Form from './Form/Form';
+import Select from './Select/Select';
+import Radio from './Radio/Radio';
+import Checkbox from './Checkbox/Checkbox';
+import Controlform from './Controlform/Controlform';
+import todolistBase from '../components/data/todolist.json';
+import Todolist from './Todolist/Todolist';
+import FormFormik from './FormFormik/FormFormik';
 // import Rest from './Rest';
 // import Test from './Test';
 
@@ -115,9 +124,99 @@ export default function App() {
     }, []);
     return <div>MODAL WINDOW</div>;
   };
+  const onLogin = user => {
+    console.log('user name', user.names);
+    console.log('user pass', user.passwords);
+  };
+  const [onSelect, setOnSelect] = useState('uk');
+  const onChangeSelect = value => {
+    setOnSelect(value);
+  };
+  const [onRadio, setOnRadio] = useState('sm');
+  const onChangeRadio = value => {
+    setOnRadio(value);
+  };
+  const [onCheckbox, setOnCheckbox] = useState(false);
+  const onChangeCheckbox = value => {
+    setOnCheckbox(value);
+  };
+  const [controlForm, setControlForm] = useState({
+    text: '',
+    password: '',
+  });
+  const onChangeControlForm = event => {
+    setControlForm({
+      ...controlForm,
+      [event.target.name]: event.target.value,
+    });
+  };
+  const onSubmitControlForm = event => {
+    event.preventDefault();
+    console.log('controlForm', controlForm);
+    setControlForm({
+      text: '',
+      password: '',
+    });
+  };
+
+  const [todolist, setTodolist] = useState(todolistBase);
+  const addTodoItem = event => {
+    event.preventDefault();
+    setTodolist([
+      ...todolist,
+      {
+        id: crypto.randomUUID(),
+        content: event.target.elements.newTodoText.value,
+      },
+    ]);
+    event.target.reset();
+  };
+  const onDeleteItem = deleteId => {
+    setTodolist(prev => {
+      return prev.filter(item => item.id !== deleteId);
+    });
+  };
+  const [searchTodoValue, setSearchTodoValue] = useState('');
+  const searchTodoList = todolist.filter(item =>
+    item.content.toLowerCase().includes(searchTodoValue.toLowerCase())
+  );
+  const onChangeSearchTodoList = event => {
+    setSearchTodoValue(event.target.value);
+  };
+
   return (
     <div>
+      <hr></hr>
+
+      <h3>FormFormik</h3>
+      <FormFormik />
+      <hr></hr>
+
+      <h3>Todolist</h3>
+      <Todolist
+        todolist={searchTodoList}
+        addTodoItem={addTodoItem}
+        onDeleteItem={onDeleteItem}
+        searchTodoValue={searchTodoValue}
+        onChangeSearchTodoList={onChangeSearchTodoList}
+      />
+      <hr></hr>
+
+      <Controlform
+        controlForm={controlForm}
+        onChangeControlForm={onChangeControlForm}
+        onSubmitControlForm={onSubmitControlForm}
+      >
+        <h3>This is control form!</h3>
+      </Controlform>
+      <hr></hr>
+
+      <Checkbox onCheckbox={onCheckbox} onChangeCheckbox={onChangeCheckbox} />
+      <Radio onRadio={onRadio} onChangeRadio={onChangeRadio} />
+      <Select onSelect={onSelect} onChangeSelect={onChangeSelect} />
+      <Form onLogin={onLogin} />
       <h1 style={alertStyle}>Best selling</h1>
+      <Usetwoeff />
       <button type="button" onClick={handleShowModal}>
         Modal, {showModal ? 'hide' : 'show'}, {showModal && <Modal />}
       </button>
