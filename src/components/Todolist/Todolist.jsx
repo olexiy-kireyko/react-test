@@ -8,7 +8,7 @@ const Todolist = ({
   searchTodoValue,
   onChangeSearchTodoList,
 }) => {
-  console.log('searchTodoList', todolist);
+  // console.log('searchTodoList', todolist);
 
   return (
     <>
